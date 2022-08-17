@@ -1,3 +1,13 @@
+<?php
+
+use App\Model\Model;
+
+$model = new Model;
+$result = $model->Upload();
+
+$model->ReadFile($result);
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -14,7 +24,7 @@
 
 <body>
     <div class='container mt-2'>
-        <form action="App\Model\upload.php" method='post' enctype="multipart/form-data">
+        <form action="" method='post' enctype="multipart/form-data">
             <input type="file" name="download" id="download">
             <a href="App\View\Template\results.php" class='btn btn-primary'>View Results</a>
             <button type='submit'name='submit' class='btn btn-success'>Import</button>
