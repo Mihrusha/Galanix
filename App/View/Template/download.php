@@ -14,10 +14,11 @@
 
 <body>
     <div class='container mt-2'>
-        <form action="">
-            <input type="file" name="download" id="download"  enctype="multipart/form-data">
+        <form action="App\Model\upload.php" method='post' enctype="multipart/form-data">
+            <input type="file" name="download" id="download">
             <a href="App\View\Template\results.php" class='btn btn-primary'>View Results</a>
-            <input type="submit" class='btn btn-success' value='Import'>
+            <button type='submit'name='submit' class='btn btn-success'>Import</button>
+            <!-- <input type="submit" class='btn btn-success' value='Import' name='submit'> -->
             <button class='btn btn-danger'>Clear Records</button>
         </form>
     </div>
