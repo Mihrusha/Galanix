@@ -76,24 +76,40 @@ class Model
         return $result;
     }
 
+    public function GetAll(){
+        $db = new Database;
+        $sql = "SELECT * FROM users_1";
+        $stmt = $db->conn->prepare($sql);
+        $stmt->execute();
+        if ($stmt->rowCount() > 0) {
+            $result = $stmt->fetchAll();
+        } else {
+            $result = 0;
+        }
+        return $result;
+    }
+
+    public function CleanTable(){
+        $db = new Database;
+        $sql = "TRUNCATE `test`.`users_1`";
+        $stmt = $db->conn->prepare($sql);
+        $stmt->execute();
+        
+    }
+
     public function ReadFile($upload)
     {
 
         $fileway = 'C:/xampp/htdocs/Galanix/uploads/';
         // C:\xampp\htdocs\Galanix\uploads\users-1.csv
         // $readfile = file_get_contents("C:/xampp/htdocs/Galanix/uploads/" . $upload);
-
         $csv = array_map('str_getcsv', file($fileway . $upload));
-
-
         $csv2 = array_shift($csv);
-   
-        foreach ($csv as $col) {
+           foreach ($csv as $col) {
             if(count($col)<6){
                 echo 'Wrong Data';
                 die;
             }
-
             
             $result = $this->SelectID($col[0]);
             if ($result != 0) {
@@ -106,9 +122,7 @@ class Model
             if ($result == 0) {
                 $this->Insert($col[0], $col[1], $col[2], $col[3], $col[4], $col[5]);
             }
-
-       
-           
+                  
         }
     }
 }
