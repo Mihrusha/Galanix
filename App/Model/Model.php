@@ -76,7 +76,8 @@ class Model
         return $result;
     }
 
-    public function GetAll(){
+    public function GetAll()
+    {
         $db = new Database;
         $sql = "SELECT * FROM users_1";
         $stmt = $db->conn->prepare($sql);
@@ -89,12 +90,12 @@ class Model
         return $result;
     }
 
-    public function CleanTable(){
+    public function CleanTable()
+    {
         $db = new Database;
         $sql = "TRUNCATE `test`.`users_1`";
         $stmt = $db->conn->prepare($sql);
         $stmt->execute();
-        
     }
 
     public function ReadFile($upload)
@@ -105,12 +106,12 @@ class Model
         // $readfile = file_get_contents("C:/xampp/htdocs/Galanix/uploads/" . $upload);
         $csv = array_map('str_getcsv', file($fileway . $upload));
         $csv2 = array_shift($csv);
-           foreach ($csv as $col) {
-            if(count($col)<6){
+        foreach ($csv as $col) {
+            if (count($col) < 6) {
                 echo 'Wrong Data';
                 die;
             }
-            
+
             $result = $this->SelectID($col[0]);
             if ($result != 0) {
                 foreach ($result as $row) {
@@ -122,7 +123,26 @@ class Model
             if ($result == 0) {
                 $this->Insert($col[0], $col[1], $col[2], $col[3], $col[4], $col[5]);
             }
-                  
         }
+    }
+
+    public function Export()
+    {
+        $db = new Database;
+
+        $csvFile = "export.csv";
+        $handle = fopen($csvFile, "w");
+        if ($handle === false) {
+            exit("Error creating $csvFile");
+        }
+
+        $stmt = $db->conn->prepare("SELECT * FROM `users_1`");
+        $stmt->execute();
+        while ($row = $stmt->fetch()) {
+            // print_r($row);
+            fputcsv($handle, [$row["UID"], $row["Name"], $row["Age"], $row["Email"], $row["Phone"], $row["Gender"]]);
+        }
+        fclose($handle);
+        echo "DONE!";
     }
 }
