@@ -1,17 +1,17 @@
 <?php
 
-use App\Model\Model;
+// use App\Model\Model;
 
-$model = new Model;
-if(isset($_POST['submit'])){
-    $result = $model->Upload();
+// $model = new Model;
+// if(isset($_POST['submit'])){
+//     $result = $model->Upload();
 
-    $model->ReadFile($result);
-}
+//     $model->ReadFile($result);
+// }
 
-if(isset($_POST['delete'])){
-    $model->CleanTable();
-}
+// if(isset($_POST['delete'])){
+//     $model->CleanTable();
+// }
 
 ?>
 
@@ -33,7 +33,7 @@ if(isset($_POST['delete'])){
     <div class='container mt-2'>
         <form action="" method='post' enctype="multipart/form-data">
             <input type="file" name="download" id="download">
-            <a href="App\View\Template\results.php" class='btn btn-primary'>View Results</a>
+            <a href="App\View\Template\results.php" class='btn btn-primary' name='result_page'>View Results</a>
             <button type='submit'name='submit' class='btn btn-success'>Import</button>
             <!-- <input type="submit" class='btn btn-success' value='Import' name='submit'> -->
             <button class='btn btn-danger' name='delete'>Clear Records</button>

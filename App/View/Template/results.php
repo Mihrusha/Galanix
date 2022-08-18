@@ -33,7 +33,56 @@ if (isset($_POST['export'])) {
 <body>
     <div class='container'>
         <a href="/Galanix/index.php" class='btn btn-primary'>Import Data</a>
-        <table class="table">
+
+
+
+
+        <ul class='navbar inline'>
+            <li>
+                <div class='container '>
+                    <label for="UID">UID</label>
+                    <input type="text" id='UID' class="form-control">
+                </div>
+            </li>
+            <li>
+                <div class='container'>
+                    <label for="Name">Name</label>
+                    <input type="text" id='Name' class="form-control">
+                </div>
+            </li>
+            <li>
+                <div class='container'>
+                    <label for="Age">Age</label>
+                    <input type="text" id='Age' class="form-control">
+                </div>
+            </li>
+            <li>
+                <div class='container'>
+                    <label for="Email">Email</label>
+                    <input type="text" id='Email' class="form-control">
+                </div>
+            </li>
+            <li>
+                <div class='container'>
+                    <label for="Phone">Phone</label>
+                    <input type="text" id='Phone' class="form-control">
+                </div>
+            </li>
+
+            <li>
+                <label for="Gender">Gender</label>
+                <div class='container'>
+
+                    <select name="gender" id="gender">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
+                </div>
+            </li>
+        </ul>
+
+        <table class="table table-bordered table-striped">
+
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -44,29 +93,92 @@ if (isset($_POST['export'])) {
                     <th scope="col">Gender</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="myTable">
                 <?php foreach ($result as $row) : ?>
                     <tr>
-
-                        <td><?= $row['UID'] ?></td>
+                        <td class='col1'><?= $row['UID'] ?></td>
                         <td><?= $row['Name'] ?></td>
-                        <td><?= $row['Age'] ?></td>
+                        <td class='col3'><?= $row['Age'] ?></td>
                         <td><?= $row['Email'] ?></td>
                         <td><?= $row['Phone'] ?></td>
-                        <td><?= $row['Gender'] ?></td>
+                        <td class='col6'><?= $row['Gender'] ?></td>
                     </tr>
                 <?php endforeach ?>
+
             </tbody>
         </table>
 
         <form action="" method='post'>
-        <a href="/Galanix/App/View/Template/export.csv" id='link' style='display:none;' download>Download Files</a>
+            <a href="/Galanix/App/View/Template/export.csv" id='link' style='display:none;' download>Download Files</a>
             <button type='submit' class='btn btn-warning' name='export' id='export'>Export to CSV</button>
         </form>
 
 
     </div>
     <script>
+        $.expr[":"].exact = $.expr.createPseudo(function(arg) {
+
+            return function(element) {
+
+                return $(element).text() === arg.trim();
+
+            };
+
+        });
+
+        $("#UID").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+                $(this).toggle($(this).find("td:eq(0)").text().toLowerCase().toLowerCase() == value)
+            });
+        });
+
+
+
+        $("#Name").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+                $(this).toggle($(this).find("td:eq(1)").text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        $('#Age').on("keyup", function() {
+
+
+            $("#myTable td.col3:contains('" + $(this).val() + "')").parent().show();
+
+            $("#myTable td.col3:not(:contains('" + $(this).val() + "'))").parent().hide();
+        });
+
+
+
+        $("#Email").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+                $(this).toggle($(this).find("td:eq(3)").text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        $("#Phone").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#myTable tr").filter(function() {
+                $(this).toggle($(this).find("td:eq(4)").text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        
+
+        $("#gender").on("change", function() {
+            var value = $('#gender').val().toLowerCase();
+
+
+            $("#myTable tr").filter(function() {
+                $(this).toggle($(this).find("td:eq(5)").text().toLowerCase() == value)
+            });
+        });
+
+
+
         $('#export').click(function() {
             document.getElementById("link").click()
         })

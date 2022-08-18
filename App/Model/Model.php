@@ -31,7 +31,7 @@ class Model
                 if ($fileError === 0) {
                     if ($fileSize < 10000) {
                         $fileNameNew = $fileName;
-                        $fileDestination = 'C:/xampp/htdocs/Galanix/uploads/' . $fileNameNew;
+                        $fileDestination = '../Galanix/uploads/' . $fileNameNew;
                         move_uploaded_file($fileTmpName, $fileDestination);
                         return $fileNameNew;
                         header("Location:/Galanix/index.php?$this->uploaded");
@@ -101,7 +101,7 @@ class Model
     public function ReadFile($upload)
     {
 
-        $fileway = 'C:/xampp/htdocs/Galanix/uploads/';
+        $fileway = '../Galanix/uploads/';
         // C:\xampp\htdocs\Galanix\uploads\users-1.csv
         // $readfile = file_get_contents("C:/xampp/htdocs/Galanix/uploads/" . $upload);
         $csv = array_map('str_getcsv', file($fileway . $upload));
