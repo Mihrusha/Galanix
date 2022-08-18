@@ -2,7 +2,7 @@
 
 use App\Model\Model;
 
-include_once 'C:\xampp\htdocs\Galanix\vendor\autoload.php';
+include_once '../../../vendor/autoload.php';
 $model = new Model;
 
 $result = $model->GetAll();
